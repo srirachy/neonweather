@@ -9,6 +9,10 @@ const Forecast = ({ dailyData }) => {
   const fcElmts = [];
   const imgUrlBase = 'http://openweathermap.org/img/wn/';
   const imgUrlExt = '@2x.png';
+  const showWeather = (day) => {
+    console.log(day);
+  };
+  const onKeyPressHandler = () => {};
   dailyData.forEach(
     ({ temp: { max, min }, weather, dt, humidity }) => {
       const wIcon = weather[0].icon;
@@ -20,7 +24,13 @@ const Forecast = ({ dailyData }) => {
       const curDay = addZero(sDate.day);
       const dayText = sDate.dayOfWeek;
       fcElmts.push(
-        <div className="dayCard">
+        <div
+          className="dayCard"
+          onClick={() => showWeather(dayText)}
+          onKeyPress={onKeyPressHandler}
+          role="button"
+          tabIndex="0"
+        >
           <p>
             {dayText} {curDay}
           </p>
