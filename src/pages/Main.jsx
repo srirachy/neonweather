@@ -3,37 +3,9 @@ import styled from 'styled-components';
 import { getForecast } from '../services/API';
 import Forecast from '../components/Forecast';
 
-const MainWrapper = styled.article`
+const MainWrapper = styled.main`
   width: 100vw;
   height: 100vh;
-`;
-
-const ForecastWrapper = styled.section`
-  display: flex;
-  flex-direction: column;
-  width: 80%;
-  height: 30%;
-  margin: 0 auto;
-  background-color: #aaa;
-  .dataContainer {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-  .forecastContainer {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-  .dayCard {
-    height: 100%;
-    width: 11%;
-    background-color: #abe;
-    cursor: pointer;
-  }
 `;
 
 function Main() {
@@ -64,14 +36,7 @@ function Main() {
 
   return (
     <MainWrapper>
-      <ForecastWrapper>
-        <div className="dataContainer">
-          <p>Daily Forecast</p>
-          <div className="forecastContainer">
-            <Forecast dailyData={dailyData} />
-          </div>
-        </div>
-      </ForecastWrapper>
+      <Forecast dailyData={dailyData} />
     </MainWrapper>
   );
 }

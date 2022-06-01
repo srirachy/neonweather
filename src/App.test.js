@@ -1,24 +1,23 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { array, objectOf } from 'prop-types';
 import App from './App';
 
-test('renders daily forecast component', async () => {
+test('renders eight day clickable cards', async () => {
   render(<App />);
-  const fcElmt = screen.getByText(/daily forecast/i);
-  const sunElmt = await screen.findByText(/sunday/i);
-  const monElmt = await screen.findByText(/monday/i);
-  const tuesElmt = await screen.findByText(/tuesday/i);
-  const wedElmt = await screen.findByText(/wednesday/i);
-  const thurElmt = await screen.findByText(/thursday/i);
-  const friElmt = await screen.findByText(/friday/i);
-  const satElmt = await screen.findByText(/saturday/i);
-  expect(fcElmt).toBeInTheDocument();
-  expect(sunElmt).toBeInTheDocument();
-  expect(monElmt).toBeInTheDocument();
-  expect(tuesElmt).toBeInTheDocument();
-  expect(wedElmt).toBeInTheDocument();
-  expect(thurElmt).toBeInTheDocument();
-  expect(friElmt).toBeInTheDocument();
-  expect(satElmt).toBeInTheDocument();
+  expect(await screen.findAllByRole('button')).toHaveLength(8);
+});
+
+test('renders eight day forecast images', async () => {
+  render(<App />);
+  expect(await screen.findAllByRole('img')).toHaveLength(8);
+  // const altElmts = await screen.findAllByAltText(
+  //   /sky|clouds|rain|thunderstorm|snow|mist/i,
+  // );
+});
+
+test('when user clicks on a card, the proper output is generated', async () => {
+  render(<App />);
+  const btnElmtOne = await screen.findByTestId('button_0');
 });
