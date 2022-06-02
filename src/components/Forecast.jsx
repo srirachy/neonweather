@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
 import DayWeather from './DayWeather';
@@ -48,9 +48,11 @@ const DayWrapper = styled.div`
 function Forecast({ dailyData }) {
   const [dayData, setDayData] = useState({});
   const [isSelected, setIsSelected] = useState('');
+  // set initial day weather info and selected card
   useEffect(() => {
-    if (dailyData) {
+    if (Object.keys(dailyData).length !== 0) {
       setDayData(dailyData[0]);
+      setIsSelected(dailyData[0].dt);
     }
   }, [dailyData]);
   const renderForecast = () => {
@@ -58,11 +60,12 @@ function Forecast({ dailyData }) {
     const imgUrlBase = 'http://openweathermap.org/img/wn/';
     const imgUrlExt = '@2x.png';
     let buttonCount = 0;
-    const getDayData = (objData, id) => {
+    // pass user selected card data
+    const userSelectDay = (objData, id) => {
       setDayData(objData);
       setIsSelected(id);
     };
-    const onKeyPressHandler = () => {}; // mostly for eslinter for now
+    // create weekly weather forecast component
     dailyData.forEach(
       ({ temp: { max, min }, weather, dt, humidity }) => {
         const curData = dailyData[buttonCount];
@@ -77,11 +80,9 @@ function Forecast({ dailyData }) {
         const testId = `button_${buttonCount}`;
         fcElmts.push(
           <DayWrapper
-            className="dayCard"
             data-testid={testId}
-            onClick={() => getDayData(curData, dt)}
-            onKeyPress={onKeyPressHandler}
-            tabIndex={buttonCount}
+            onClick={() => userSelectDay(curData, dt)}
+            tabIndex="0"
             role="button"
             isSelected={isSelected === dt}
             key={nanoid()}
@@ -102,6 +103,7 @@ function Forecast({ dailyData }) {
     );
     return fcElmts;
   };
+
   return (
     <ForecastWrapper>
       <WeekForecastWrapper>
