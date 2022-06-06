@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { getForecast } from '../services/API';
 import Forecast from '../components/Forecast';
+import Search from '../components/Search';
 
 const MainWrapper = styled.main`
   width: 100vw;
@@ -36,6 +37,7 @@ function Main() {
 
   return (
     <MainWrapper>
+      <Search />
       <Forecast dailyData={dailyData} />
     </MainWrapper>
   );

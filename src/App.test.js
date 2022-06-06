@@ -20,4 +20,19 @@ test('renders eight day forecast images', async () => {
 test('when user clicks on a card, the proper output is generated', async () => {
   render(<App />);
   const btnElmtOne = await screen.findByTestId('button_0');
+  userEvent.click(btnElmtOne);
+  const detailElmtOne = await screen.findByTestId('button_0_detail');
+  expect(detailElmtOne).toBeInTheDocument();
+
+  const btnElmtTwo = await screen.findByTestId('button_1');
+  userEvent.click(btnElmtTwo);
+  // const detailElmtTwo = await screen.findByTestId('button_1_detail');
+  expect(detailElmtOne).toHaveAttribute(
+    'data-testid',
+    'button_1_detail',
+  );
+  expect(detailElmtOne).not.toHaveAttribute(
+    'data-testid',
+    'button_0_detail',
+  );
 });

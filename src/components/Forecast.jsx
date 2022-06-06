@@ -48,11 +48,13 @@ const DayWrapper = styled.div`
 function Forecast({ dailyData }) {
   const [dayData, setDayData] = useState({});
   const [isSelected, setIsSelected] = useState('');
+  const [ariaTestId, setAriaTestId] = useState('');
   // set initial day weather info and selected card
   useEffect(() => {
     if (Object.keys(dailyData).length !== 0) {
       setDayData(dailyData[0]);
       setIsSelected(dailyData[0].dt);
+      setAriaTestId('button_0');
     }
   }, [dailyData]);
   const renderForecast = () => {
@@ -61,9 +63,10 @@ function Forecast({ dailyData }) {
     const imgUrlExt = '@2x.png';
     let buttonCount = 0;
     // pass user selected card data
-    const userSelectDay = (objData, id) => {
+    const userSelectDay = (objData, id, ariaId) => {
       setDayData(objData);
       setIsSelected(id);
+      setAriaTestId(ariaId);
     };
     // create weekly weather forecast component
     dailyData.forEach(
@@ -81,7 +84,7 @@ function Forecast({ dailyData }) {
         fcElmts.push(
           <DayWrapper
             data-testid={testId}
-            onClick={() => userSelectDay(curData, dt)}
+            onClick={() => userSelectDay(curData, dt, testId)}
             tabIndex="0"
             role="button"
             isSelected={isSelected === dt}
@@ -107,10 +110,10 @@ function Forecast({ dailyData }) {
   return (
     <ForecastWrapper>
       <WeekForecastWrapper>
-        <p>Daily Forecast</p>
+        <p key={nanoid()}>Daily Forecast</p>
         <CardWrapper>{renderForecast()}</CardWrapper>
       </WeekForecastWrapper>
-      <DayWeather dayData={dayData} />
+      <DayWeather dayData={dayData} ariaTestId={ariaTestId} />
     </ForecastWrapper>
   );
 }
