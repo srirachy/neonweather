@@ -41,7 +41,7 @@ function DayWeather({ dayData, ariaTestId }) {
   const renderDetails = () => {
     const dElmts = [];
     dElmts.push(
-      <SunWrapper>
+      <SunWrapper key={nanoid()}>
         <p key={nanoid()}>{dayData.temp.day}&deg;F</p>
         <p key={nanoid()}>
           Feels like: {dayData.feels_like.day}&deg;F
@@ -51,7 +51,7 @@ function DayWeather({ dayData, ariaTestId }) {
       </SunWrapper>,
     );
     dElmts.push(
-      <MoonWrapper>
+      <MoonWrapper key={nanoid()}>
         <p key={nanoid()}>{dayData.temp.night}&deg;F</p>
         <p key={nanoid()}>
           Feels like: {dayData.feels_like.night}&deg;F
@@ -65,9 +65,9 @@ function DayWeather({ dayData, ariaTestId }) {
     return dElmts;
   };
   return (
-    <DayForecastWrapper data-testid={idName}>
+    <DayForecastWrapper data-testid={idName} key={nanoid()}>
       <p key={nanoid()}>Forecast Details</p>
-      <DetailsWrapper>
+      <DetailsWrapper key={nanoid()}>
         {/* wait for dayData to get data */}
         {Object.keys(dayData).length !== 0 && renderDetails()}
       </DetailsWrapper>
