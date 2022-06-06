@@ -33,3 +33,13 @@ export const addZero = (num) => {
   }
   return num;
 };
+
+export const convertTime = (curTime) => {
+  const time = new Date(curTime * 1000);
+  const locTime = time.toLocaleTimeString().split(':');
+  const meridiem = locTime[2].split(' ');
+  const newTime = `${addZero(locTime[0])}:${locTime[1]} ${
+    meridiem[1]
+  }`;
+  return newTime;
+};
