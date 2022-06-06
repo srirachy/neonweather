@@ -1,6 +1,8 @@
 const baseUrlOneCall = `https://api.openweathermap.org/data/3.0/onecall?`;
 const wkey = process.env.REACT_APP_API_KEY_WEATHER;
-const baseSearchCall = `http://api.openweathermap.org/geo/1.0/direct?q=`;
+const gkey = process.env.REACT_APP_API_KEY_GEOCODE;
+const baseGeoCallOne = `https://maps.googleapis.com/maps/api/geocode/json?address=`;
+const baseGeoCallTwo = `&key=${gkey}`;
 
 export const getForecast = async (lat, lon) => {
   const res = await fetch(
@@ -11,7 +13,7 @@ export const getForecast = async (lat, lon) => {
 
 export const getLocation = async (search) => {
   const res = await fetch(
-    `${baseSearchCall}${search}&limit=5&appid=${wkey}`,
+    `${baseGeoCallOne}${search}${baseGeoCallTwo}`,
   );
   return res.json();
 };

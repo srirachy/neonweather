@@ -12,8 +12,8 @@ import {
 const ForecastWrapper = styled.section`
   display: flex;
   flex-direction: column;
-  width: 80%;
-  min-height: 60%;
+  width: 80vw;
+  height: 60vh;
   margin: 0 auto;
   background-color: #aaa;
 `;
@@ -26,8 +26,8 @@ const WeekForecastWrapper = styled.section`
 `;
 
 const CardWrapper = styled.div`
-  min-height: 100%;
-  min-width: 95%;
+  height: 100%;
+  width: 95%;
   margin: 0 auto;
   display: flex;
   flex-direction: row;
@@ -35,8 +35,6 @@ const CardWrapper = styled.div`
 `;
 
 const DayWrapper = styled.div`
-  min-height: 100%;
-  min-width: 11%;
   background-color: ${(props) =>
     props.isSelected ? '#ffffff' : '#abe'};
   cursor: pointer;
