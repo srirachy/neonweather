@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { getForecast } from '../services/API';
 import Forecast from '../components/Forecast';
-import Search from '../components/Search';
+import LocationContext from '../utils/LocationContext';
 
 const MainWrapper = styled.main`
   width: 100vw;
@@ -10,34 +10,33 @@ const MainWrapper = styled.main`
 `;
 
 function Main() {
-  const [lat, setLat] = useState('');
-  const [lon, setLon] = useState('');
+  // const [loc, setLoc] = useState('');
   // const [allWeatherData, setAllWeatherData] = useState([]); // prolly wont need this
   const [dailyData, setDailyData] = useState([]);
+  const { lat, lng } = useContext(LocationContext);
   // const [curWeatherData, setCurWeatherData] = useState({});
 
   // set initial lat/lon
-  useEffect(() => {
-    setLat('34.0901');
-    setLon('-118.4065');
-  }, []);
+  // useEffect(() => {
+  //   setLat('34.0901');
+  //   setLng('-118.4065');
+  // }, [setLat, setLng]);
 
   // get weather data via oneweather one call
   useEffect(() => {
     const getData = async () => {
-      const fetchedData = await getForecast(lat, lon);
+      const fetchedData = await getForecast(lat, lng);
       // setAllWeatherData(fetchedData);
       setDailyData(fetchedData.daily);
       // setCurWeatherData(fetchedData.current);
     };
-    if (lat && lon) {
+    if (lat && lng) {
       getData();
     }
-  }, [lat, lon]);
+  }, [lat, lng]);
 
   return (
     <MainWrapper>
-      <Search />
       <Forecast dailyData={dailyData} />
     </MainWrapper>
   );
