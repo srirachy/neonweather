@@ -10,25 +10,14 @@ const MainWrapper = styled.main`
 `;
 
 function Main() {
-  // const [loc, setLoc] = useState('');
-  // const [allWeatherData, setAllWeatherData] = useState([]); // prolly wont need this
   const [dailyData, setDailyData] = useState([]);
   const { lat, lng } = useContext(LocationContext);
-  // const [curWeatherData, setCurWeatherData] = useState({});
-
-  // set initial lat/lon
-  // useEffect(() => {
-  //   setLat('34.0901');
-  //   setLng('-118.4065');
-  // }, [setLat, setLng]);
 
   // get weather data via oneweather one call
   useEffect(() => {
     const getData = async () => {
       const fetchedData = await getForecast(lat, lng);
-      // setAllWeatherData(fetchedData);
       setDailyData(fetchedData.daily);
-      // setCurWeatherData(fetchedData.current);
     };
     if (lat && lng) {
       getData();
