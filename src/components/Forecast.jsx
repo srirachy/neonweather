@@ -25,7 +25,7 @@ const WeekForecastWrapper = styled.section`
   flex-direction: column;
 `;
 
-const CardWrapper = styled.div`
+const CardContainer = styled.div`
   height: 100%;
   width: 95%;
   margin: 0 auto;
@@ -34,7 +34,7 @@ const CardWrapper = styled.div`
   justify-content: space-evenly;
 `;
 
-const DayWrapper = styled.div`
+const CardWrapper = styled.div`
   background-color: ${(props) =>
     props.isSelected ? '#ffffff' : '#abe'};
   cursor: pointer;
@@ -80,7 +80,7 @@ function Forecast({ dailyData }) {
         const dayText = sDate.dayOfWeek;
         const testId = `button_${buttonCount}`;
         fcElmts.push(
-          <DayWrapper
+          <CardWrapper
             data-testid={testId}
             onClick={() => userSelectDay(curData, dt, testId)}
             tabIndex="0"
@@ -97,7 +97,7 @@ function Forecast({ dailyData }) {
             <img src={iconUrl} alt={wDesc} />
             <p>{wDesc}</p>
             <p>Humidity: {humidity}</p>
-          </DayWrapper>,
+          </CardWrapper>,
         );
         buttonCount += 1; // add one to buttonCount for aria id
       },
@@ -108,8 +108,8 @@ function Forecast({ dailyData }) {
   return (
     <ForecastWrapper>
       <WeekForecastWrapper>
-        <p key={nanoid()}>Daily Forecast</p>
-        <CardWrapper>{renderForecast()}</CardWrapper>
+        <p key={nanoid()}>Daily Forecast for Cityname</p>
+        <CardContainer>{renderForecast()}</CardContainer>
       </WeekForecastWrapper>
       <DayWeather dayData={dayData} ariaTestId={ariaTestId} />
     </ForecastWrapper>

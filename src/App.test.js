@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
@@ -47,4 +47,18 @@ test('when user clicks on a card, the proper output is generated', async () => {
     'button_1_detail',
   );
   expect(detailElmtOne).not.toBeInTheDocument();
+});
+
+test('when user enters a location, the weather updates to the location', async () => {
+  render(
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>,
+  );
+  const searchElmt = screen.getByRole('textbox', {
+    placeholder: /search location/i,
+  });
+  expect(searchElmt).toBeInTheDocument();
+  userEvent.type(searchElmt, 'Santa Clara');
+  fireEvent.submit(searchElmt);
 });

@@ -6,7 +6,7 @@ import LocationContext from './utils/LocationContext';
 
 function App() {
   const weatherPath = '/weather_app';
-  const [curLoc, setCurLoc] = useState('santa clara');
+  const [curLoc, setCurLoc] = useState('santa clara'); // default location
   const [lat, setLat] = useState('');
   const [lng, setLng] = useState('');
   const value = useMemo(
