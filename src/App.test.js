@@ -50,15 +50,25 @@ test('when user clicks on a card, the proper output is generated', async () => {
 });
 
 test('when user enters a location, the weather updates to the location', async () => {
-  render(
+  const handleSubmit = jest.fn();
+  const { getByTestId } = render(
     <BrowserRouter>
-      <App />
+      <App handleSubmit={handleSubmit} />
     </BrowserRouter>,
   );
+
   const searchElmt = screen.getByRole('textbox', {
     placeholder: /search location/i,
   });
   expect(searchElmt).toBeInTheDocument();
-  userEvent.type(searchElmt, 'Santa Clara');
-  fireEvent.submit(searchElmt);
+
+  // userEvent.type(searchElmt, 'Santa Clara');
+  // fireEvent.submit(searchElmt);
+  const input = screen.getByTestId('forecast_title');
+  // userEvent.type(input, 'santa clara{enter}');
+  fireEvent.keyPress(input, { key: 'Enter', charCode: 13 });
+  // expect(handleSubmit).toHaveBeenCalled();
+  // userEvent.keyboard('{enter}');
+  const title = await screen.getByTestId('forecast_title');
+  expect(title).toHaveTextContent(/santa clara/i);
 });

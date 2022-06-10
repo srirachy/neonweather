@@ -7,6 +7,8 @@ const LocationContext = createContext({
   setLng: () => {},
   curLoc: '',
   setCurLoc: () => {},
+  title: '',
+  setTitle: () => {},
 });
 
 export default LocationContext;

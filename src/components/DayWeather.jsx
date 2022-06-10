@@ -25,14 +25,11 @@ const MoonWrapper = styled.div``;
 
 function DayWeather({ dayData, ariaTestId }) {
   const [idName, setIdName] = useState('');
-  useEffect(() => {
-    if (Object.keys(dayData).length !== 0) {
-      console.log(dayData);
-      // const asdfTime = new Date(dayData.sunrise * 1000);
-      // console.log(convertTime(asdfTime));
-      // console.log(dayData.feels_like);
-    }
-  }, [dayData]);
+  // useEffect(() => {
+  //   if (Object.keys(dayData).length !== 0) {
+  //     console.log(dayData);
+  //   }
+  // }, [dayData]);
   useEffect(() => {
     if (ariaTestId) {
       setIdName(`${ariaTestId}_detail`);

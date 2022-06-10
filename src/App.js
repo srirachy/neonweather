@@ -9,6 +9,7 @@ function App() {
   const [curLoc, setCurLoc] = useState('santa clara'); // default location
   const [lat, setLat] = useState('');
   const [lng, setLng] = useState('');
+  const [title, setTitle] = useState('');
   const value = useMemo(
     () => ({
       lat,
@@ -17,8 +18,10 @@ function App() {
       setLng,
       curLoc,
       setCurLoc,
+      title,
+      setTitle,
     }),
-    [lat, lng, curLoc],
+    [lat, lng, curLoc, title],
   );
 
   return (

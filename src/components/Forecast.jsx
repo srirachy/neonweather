@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
 import DayWeather from './DayWeather';
+import LocationContext from '../utils/LocationContext';
 import {
   convertUnixDate,
   parseDate,
@@ -47,6 +48,7 @@ function Forecast({ dailyData }) {
   const [dayData, setDayData] = useState({});
   const [isSelected, setIsSelected] = useState('');
   const [ariaTestId, setAriaTestId] = useState('');
+  const { title } = useContext(LocationContext);
   // set initial day weather info and selected card
   useEffect(() => {
     if (Object.keys(dailyData).length !== 0) {
@@ -92,7 +94,7 @@ function Forecast({ dailyData }) {
               {dayText} {curDay}
             </p>
             <p>
-              {max} / {min}
+              {max}&deg;F / {min}&deg;F
             </p>
             <img src={iconUrl} alt={wDesc} />
             <p>{wDesc}</p>
@@ -108,7 +110,9 @@ function Forecast({ dailyData }) {
   return (
     <ForecastWrapper>
       <WeekForecastWrapper>
-        <p key={nanoid()}>Daily Forecast for Cityname</p>
+        <p data-testid="forecast_title" key={nanoid()}>
+          Daily Forecast for {title}
+        </p>
         <CardContainer>{renderForecast()}</CardContainer>
       </WeekForecastWrapper>
       <DayWeather dayData={dayData} ariaTestId={ariaTestId} />

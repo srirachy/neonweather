@@ -1,9 +1,14 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+} from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationCrosshairs } from '@fortawesome/free-solid-svg-icons';
 import { nanoid } from 'nanoid';
-import { getLocation } from '../services/API';
+import { getLocation, getReverseGeo } from '../services/API';
 import LocationContext from '../utils/LocationContext';
 
 const FormWrapper = styled.div`
@@ -20,13 +25,81 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
 `;
 
 function Search() {
-  const { curLoc, setCurLoc, setLat, setLng } =
+  const { curLoc, setCurLoc, setLat, setLng, setTitle } =
     useContext(LocationContext);
   const [newLoc, setNewLoc] = useState('');
 
   // for userLoc, get city, state... for normal search, get city, state or country
-  const getLocTitle = () => {};
-
+  const getLocTitle = useCallback(
+    async (locData, isGeo) => {
+      let city;
+      let state;
+      let country;
+      let name;
+      // console.log(locData);
+      for (
+        let i = 0;
+        i < locData.results[0].address_components.length;
+        i += 1
+      ) {
+        for (
+          let j = 0;
+          j < locData.results[0].address_components[i].types.length;
+          j += 1
+        ) {
+          switch (locData.results[0].address_components[i].types[j]) {
+            case 'establishment':
+              name =
+                locData.results[0].address_components[i].short_name;
+              break;
+            case 'park':
+              name =
+                locData.results[0].address_components[i].short_name;
+              break;
+            case 'point_of_interest':
+              name =
+                locData.results[0].address_components[i].short_name;
+              break;
+            case 'tourist_attraction':
+              name =
+                locData.results[0].address_components[i].short_name;
+              break;
+            case 'locality':
+              city =
+                locData.results[0].address_components[i].short_name;
+              break;
+            case 'administrative_area_level_1':
+              state =
+                locData.results[0].address_components[i].short_name;
+              break;
+            case 'country':
+              country =
+                locData.results[0].address_components[i].long_name;
+              break;
+            default:
+            // do nothing
+          }
+        }
+      }
+      // prio city/state if using userlocation, else prio establishment if user input search
+      if (isGeo) {
+        if (city && state) {
+          setTitle(`${city}, ${state}`);
+        } else {
+          setTitle(country);
+        }
+      } else if (!isGeo) {
+        if (name) {
+          setTitle(name);
+        } else if (city && state) {
+          setTitle(`${city}, ${state}`);
+        } else {
+          setTitle(country);
+        }
+      }
+    },
+    [setTitle],
+  );
   // declare formSubmit before useEffect below
   const formSubmit = (e) => {
     e.preventDefault();
@@ -35,9 +108,11 @@ function Search() {
   };
 
   // geocode success
-  const showPosition = (position) => {
+  const showPosition = async (position) => {
     const gLat = position.coords.latitude;
     const gLng = position.coords.longitude;
+    const gLoc = await getReverseGeo(gLat, gLng);
+    getLocTitle(gLoc, true);
     setLat(gLat);
     setLng(gLng);
   };
@@ -69,7 +144,7 @@ function Search() {
         posError,
       );
     } else {
-      console.log('Unavailable');
+      console.warn('User location is unavailable');
     }
   };
 
@@ -110,22 +185,20 @@ function Search() {
         if (loc.status === 'OK') {
           setLat(loc.results[0].geometry.location.lat);
           setLng(loc.results[0].geometry.location.lng);
-          getLocTitle(loc);
-          console.log(loc);
+          getLocTitle(loc, false);
         } else {
-          // do nothing for now
+          console.warn(`Unable to find ${curLoc}`);
         }
       }
     };
     getLatLon();
-  }, [curLoc, setLat, setLng]);
+  }, [curLoc, getLocTitle, setLat, setLng]);
 
   // handle enter event key
   useEffect(() => {
     const keyDownHandler = (event) => {
       if (event.key === 'Enter') {
         event.preventDefault();
-
         formSubmit(event);
       }
     };
