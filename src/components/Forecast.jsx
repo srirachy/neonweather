@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
 import DayWeather from './DayWeather';
+import LocationContext from '../utils/LocationContext';
 import {
   convertUnixDate,
   parseDate,
@@ -12,8 +13,8 @@ import {
 const ForecastWrapper = styled.section`
   display: flex;
   flex-direction: column;
-  width: 80%;
-  min-height: 60%;
+  width: 80vw;
+  height: 60vh;
   margin: 0 auto;
   background-color: #aaa;
 `;
@@ -25,18 +26,16 @@ const WeekForecastWrapper = styled.section`
   flex-direction: column;
 `;
 
-const CardWrapper = styled.div`
-  min-height: 100%;
-  min-width: 95%;
+const CardContainer = styled.div`
+  height: 100%;
+  width: 95%;
   margin: 0 auto;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
 `;
 
-const DayWrapper = styled.div`
-  min-height: 100%;
-  min-width: 11%;
+const CardWrapper = styled.div`
   background-color: ${(props) =>
     props.isSelected ? '#ffffff' : '#abe'};
   cursor: pointer;
@@ -48,11 +47,14 @@ const DayWrapper = styled.div`
 function Forecast({ dailyData }) {
   const [dayData, setDayData] = useState({});
   const [isSelected, setIsSelected] = useState('');
+  const [ariaTestId, setAriaTestId] = useState('');
+  const { title } = useContext(LocationContext);
   // set initial day weather info and selected card
   useEffect(() => {
     if (Object.keys(dailyData).length !== 0) {
       setDayData(dailyData[0]);
       setIsSelected(dailyData[0].dt);
+      setAriaTestId('button_0');
     }
   }, [dailyData]);
   const renderForecast = () => {
@@ -61,9 +63,10 @@ function Forecast({ dailyData }) {
     const imgUrlExt = '@2x.png';
     let buttonCount = 0;
     // pass user selected card data
-    const userSelectDay = (objData, id) => {
+    const userSelectDay = (objData, id, ariaId) => {
       setDayData(objData);
       setIsSelected(id);
+      setAriaTestId(ariaId);
     };
     // create weekly weather forecast component
     dailyData.forEach(
@@ -79,9 +82,9 @@ function Forecast({ dailyData }) {
         const dayText = sDate.dayOfWeek;
         const testId = `button_${buttonCount}`;
         fcElmts.push(
-          <DayWrapper
+          <CardWrapper
             data-testid={testId}
-            onClick={() => userSelectDay(curData, dt)}
+            onClick={() => userSelectDay(curData, dt, testId)}
             tabIndex="0"
             role="button"
             isSelected={isSelected === dt}
@@ -91,12 +94,12 @@ function Forecast({ dailyData }) {
               {dayText} {curDay}
             </p>
             <p>
-              {max} / {min}
+              {max}&deg;F / {min}&deg;F
             </p>
             <img src={iconUrl} alt={wDesc} />
             <p>{wDesc}</p>
             <p>Humidity: {humidity}</p>
-          </DayWrapper>,
+          </CardWrapper>,
         );
         buttonCount += 1; // add one to buttonCount for aria id
       },
@@ -107,10 +110,12 @@ function Forecast({ dailyData }) {
   return (
     <ForecastWrapper>
       <WeekForecastWrapper>
-        <p>Daily Forecast</p>
-        <CardWrapper>{renderForecast()}</CardWrapper>
+        <p data-testid="forecast_title" key={nanoid()}>
+          Daily Forecast for {title}
+        </p>
+        <CardContainer>{renderForecast()}</CardContainer>
       </WeekForecastWrapper>
-      <DayWeather dayData={dayData} />
+      <DayWeather dayData={dayData} ariaTestId={ariaTestId} />
     </ForecastWrapper>
   );
 }

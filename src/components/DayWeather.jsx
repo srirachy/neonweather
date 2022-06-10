@@ -23,19 +23,22 @@ const SunWrapper = styled.div``;
 
 const MoonWrapper = styled.div``;
 
-function DayWeather({ dayData }) {
+function DayWeather({ dayData, ariaTestId }) {
+  const [idName, setIdName] = useState('');
+  // useEffect(() => {
+  //   if (Object.keys(dayData).length !== 0) {
+  //     console.log(dayData);
+  //   }
+  // }, [dayData]);
   useEffect(() => {
-    if (Object.keys(dayData).length !== 0) {
-      console.log(dayData);
-      // const asdfTime = new Date(dayData.sunrise * 1000);
-      // console.log(convertTime(asdfTime));
-      // console.log(dayData.feels_like);
+    if (ariaTestId) {
+      setIdName(`${ariaTestId}_detail`);
     }
-  }, [dayData]);
+  }, [ariaTestId]);
   const renderDetails = () => {
     const dElmts = [];
     dElmts.push(
-      <SunWrapper>
+      <SunWrapper key={nanoid()}>
         <p key={nanoid()}>{dayData.temp.day}&deg;F</p>
         <p key={nanoid()}>
           Feels like: {dayData.feels_like.day}&deg;F
@@ -45,7 +48,7 @@ function DayWeather({ dayData }) {
       </SunWrapper>,
     );
     dElmts.push(
-      <MoonWrapper>
+      <MoonWrapper key={nanoid()}>
         <p key={nanoid()}>{dayData.temp.night}&deg;F</p>
         <p key={nanoid()}>
           Feels like: {dayData.feels_like.night}&deg;F
@@ -59,9 +62,9 @@ function DayWeather({ dayData }) {
     return dElmts;
   };
   return (
-    <DayForecastWrapper>
-      <p>Forecast Details</p>
-      <DetailsWrapper>
+    <DayForecastWrapper data-testid={idName} key={nanoid()}>
+      <p key={nanoid()}>Forecast Details</p>
+      <DetailsWrapper key={nanoid()}>
         {/* wait for dayData to get data */}
         {Object.keys(dayData).length !== 0 && renderDetails()}
       </DetailsWrapper>
@@ -71,10 +74,12 @@ function DayWeather({ dayData }) {
 
 DayWeather.propTypes = {
   dayData: PropTypes.instanceOf(Object),
+  ariaTestId: PropTypes.string,
 };
 
 DayWeather.defaultProps = {
   dayData: {},
+  ariaTestId: '',
 };
 
 export default DayWeather;
