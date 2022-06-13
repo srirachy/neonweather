@@ -1,8 +1,10 @@
+// convert unix date format to us date format
 export const convertUnixDate = (curDate) => {
   const date = new Date(curDate * 1000);
   return date.toLocaleDateString('en-US');
 };
 
+// convert date object to xx/xx/xxxx format and convert day value to text
 export const parseDate = (curDate) => {
   const weekday = [
     'Sunday',
@@ -27,6 +29,7 @@ export const parseDate = (curDate) => {
   return dateObj;
 };
 
+// add zero to day or month if less than 10, basically jan to sept
 export const addZero = (num) => {
   if (num < 10) {
     return `0${num}`;
@@ -34,6 +37,7 @@ export const addZero = (num) => {
   return num;
 };
 
+// convert 24h time to meridiem time
 export const convertTime = (curTime) => {
   const time = new Date(curTime * 1000);
   const locTime = time.toLocaleTimeString().split(':');
@@ -42,4 +46,19 @@ export const convertTime = (curTime) => {
     meridiem[1]
   }`;
   return newTime;
+};
+
+// create obj to add to state array
+export const createWeatherObj = (data, name, lat, lng) => {
+  const imgUrlBase = 'http://openweathermap.org/img/wn/';
+  const imgUrlExt = '.png';
+  const wObj = {
+    cityTitle: name,
+    temp: data.temp,
+    img: `${imgUrlBase}${data.weather[0].icon}${imgUrlExt}`,
+    desc: data.weather[0].description,
+    cityLat: lat,
+    cityLng: lng,
+  };
+  return wObj;
 };

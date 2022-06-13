@@ -1,76 +1,99 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { nanoid } from 'nanoid';
 import LocationContext from '../utils/LocationContext';
 
-const BarContainer = styled.div``;
+const BarContainer = styled.div`
+  display: flex;
+  width: 100vw;
+  height: 60px;
+`;
 
-const MiniWrapper = styled.div``;
+const BarWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+`;
 
-const DataWrapper = styled.div``;
+const CityWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 140px;
+  height: 60px;
+  cursor: pointer;
+  font-size: 12px;
+  margin: 0 auto;
+  img {
+    width: 30px;
+    height: 30px;
+  }
+  &:hover {
+    color: #abe;
+  }
+`;
 
-function WorldWeatherBar({
-  tokyoData,
-  sfData,
-  brazData,
-  nigData,
-  ukData,
-  sydData,
-  ushData,
-}) {
+const TempWrapper = styled.div``;
+
+const CityNameWrapper = styled.div``;
+
+function WorldWeatherBar({ worldData }) {
   const { setLat, setLng, setTitle } = useContext(LocationContext);
+  // const [citySelect, setCitySelect] = useState('');
 
-  const renderCities = () => {
-    // icon, weather, name
-    const imgUrlBase = 'http://openweathermap.org/img/wn/';
-    const imgUrlExt = '.png';
-    const tokyoImg = `${imgUrlBase}${tokyoData.weather[0].icon}${imgUrlExt}`;
-    const cityElmts = [];
-    cityElmts.push(
-      <DataWrapper>
-        <p>{tokyoData.temp}&deg;F</p>
-        <img src={tokyoImg} alt={tokyoData.weather[0].description} />
-        <p>Tokyo, Japan</p>
-      </DataWrapper>,
-    );
-    // cityElmts.push();
-    // console.log(tokyoData);
-    // console.log(sfData);
-    // console.log(brazData);
-    // console.log(nigData);
-    // console.log(ukData);
-    // console.log(sydData);
-    // console.log(ushData);
+  useEffect(() => {
+    const printData = () => {
+      console.log(worldData);
+    };
+    if (worldData) {
+      printData();
+    }
+  });
 
-    return cityElmts;
+  const setEm = (curLat, curLng, curTitle) => {
+    setLat(curLat);
+    setLng(curLng);
+    setTitle(curTitle);
+    // setCitySelect(curTitle);
   };
+
   return (
     <BarContainer>
-      <MiniWrapper>
-        {Object.keys(tokyoData).length !== 0 && renderCities()}
-      </MiniWrapper>
+      <BarWrapper>
+        {Object.keys(worldData).length !== 0 &&
+          worldData.map((data) => {
+            return (
+              // title, temp, img, desc
+              <CityWrapper
+                onClick={() =>
+                  setEm(data.cityLat, data.cityLng, data.cityTitle)
+                }
+                tabIndex="0"
+                role="button"
+                // citySelect={citySelect === data.cityTitle}
+                key={nanoid()}
+              >
+                <TempWrapper>
+                  <p>{data.temp}&deg;F</p>
+                  <img src={data.img} alt={data.desc} />
+                </TempWrapper>
+                <CityNameWrapper>
+                  <p>{data.cityTitle}</p>
+                </CityNameWrapper>
+              </CityWrapper>
+            );
+          })}
+      </BarWrapper>
     </BarContainer>
   );
 }
 
 WorldWeatherBar.propTypes = {
-  tokyoData: PropTypes.instanceOf(Object),
-  sfData: PropTypes.instanceOf(Object),
-  brazData: PropTypes.instanceOf(Object),
-  nigData: PropTypes.instanceOf(Object),
-  ukData: PropTypes.instanceOf(Object),
-  sydData: PropTypes.instanceOf(Object),
-  ushData: PropTypes.instanceOf(Object),
+  worldData: PropTypes.instanceOf(Object),
 };
 
 WorldWeatherBar.defaultProps = {
-  tokyoData: {},
-  sfData: {},
-  brazData: {},
-  nigData: {},
-  ukData: {},
-  sydData: {},
-  ushData: {},
+  worldData: {},
 };
 
 export default WorldWeatherBar;

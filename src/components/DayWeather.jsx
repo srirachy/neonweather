@@ -25,11 +25,6 @@ const MoonWrapper = styled.div``;
 
 function DayWeather({ dayData, ariaTestId }) {
   const [idName, setIdName] = useState('');
-  // useEffect(() => {
-  //   if (Object.keys(dayData).length !== 0) {
-  //     console.log(dayData);
-  //   }
-  // }, [dayData]);
   useEffect(() => {
     if (ariaTestId) {
       setIdName(`${ariaTestId}_detail`);

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { getForecast } from '../services/API';
+import { createWeatherObj } from '../services/Functions';
 import Forecast from '../components/Forecast';
 import LocationContext from '../utils/LocationContext';
 import WorldWeatherBar from '../components/WorldWeatherBar';
@@ -12,13 +13,7 @@ const MainWrapper = styled.main`
 
 function Main() {
   const [dailyData, setDailyData] = useState([]);
-  const [tokyoData, setTokyoData] = useState({});
-  const [sfData, setSfData] = useState({});
-  const [brazData, setBrazData] = useState({});
-  const [nigData, setNigData] = useState({});
-  const [ukData, setUkData] = useState({});
-  const [sydData, setSydData] = useState({});
-  const [ushData, setUshData] = useState({});
+  const [worldData, setWorldData] = useState([]);
   const { lat, lng } = useContext(LocationContext);
 
   // get weather data via oneweather one call
@@ -32,38 +27,81 @@ function Main() {
     }
   }, [lat, lng]);
 
-  // get weather data for world weather bar
+  // set weatherData to objects of weather for each major city from each continent
   useEffect(() => {
     const getWorldData = async () => {
+      const cityData = [];
       const fetchTokyo = await getForecast('35.6762', '139.6503');
-      setTokyoData(fetchTokyo.current);
+      cityData.push(
+        createWeatherObj(
+          fetchTokyo.current,
+          'Tokyo, Japan',
+          '35.6762',
+          '139.6503',
+        ),
+      ); // create tokyo obj
       const fetchSf = await getForecast('37.7749', '122.4194');
-      setSfData(fetchSf.current);
+      cityData.push(
+        createWeatherObj(
+          fetchSf.current,
+          'San Francisco, CA',
+          '37.7749',
+          '122.4194',
+        ),
+      ); // create sf obj
       const fetchBrazil = await getForecast('23.5558', '46.6396');
-      setBrazData(fetchBrazil.current);
+      cityData.push(
+        createWeatherObj(
+          fetchBrazil.current,
+          'São Paulo, Brazil',
+          '23.5558',
+          '46.6396',
+        ),
+      ); // create san paulo obj
       const fetchNigeria = await getForecast('6.5244', '3.3792');
-      setNigData(fetchNigeria.current);
+      cityData.push(
+        createWeatherObj(
+          fetchNigeria.current,
+          'Lagos, Nigeria',
+          '6.5244',
+          '3.3792',
+        ),
+      ); // create nigeria obj
       const fetchUk = await getForecast('51.5072', '0.1276');
-      setUkData(fetchUk.current);
+      cityData.push(
+        createWeatherObj(
+          fetchUk.current,
+          'UK, London',
+          '51.5072',
+          '0.1276',
+        ),
+      ); // create uk obj
       const fetchSydney = await getForecast('33.8688', '151.2093');
-      setSydData(fetchSydney.current);
+      cityData.push(
+        createWeatherObj(
+          fetchSydney.current,
+          'Sydney, Australia',
+          '33.8688',
+          '151.2093',
+        ),
+      ); // create sydney obj
       const fetchUshuaia = await getForecast('54.8019', '68.3030');
-      setUshData(fetchUshuaia.current);
+      cityData.push(
+        createWeatherObj(
+          fetchUshuaia.current,
+          'Ushuaia, Argentina',
+          '54.8019',
+          '68.3030',
+        ),
+      ); // create ushuaia obj
+      setWorldData(cityData);
     };
     getWorldData();
   }, []);
 
   return (
     <MainWrapper>
-      <WorldWeatherBar
-        tokyoData={tokyoData}
-        sfData={sfData}
-        brazData={brazData}
-        nigData={nigData}
-        ukData={ukData}
-        sydData={sydData}
-        ushData={ushData}
-      />
+      <WorldWeatherBar worldData={worldData} />
       <Forecast dailyData={dailyData} />
     </MainWrapper>
   );
