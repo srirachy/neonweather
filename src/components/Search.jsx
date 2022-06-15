@@ -36,7 +36,6 @@ function Search() {
       let state;
       let country;
       let name;
-      // console.log(locData);
       for (
         let i = 0;
         i < locData.results[0].address_components.length;

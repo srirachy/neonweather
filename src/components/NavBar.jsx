@@ -11,9 +11,6 @@ const HeaderWrapper = styled.header`
   padding: 1rem 1.5rem;
   width: 100vw;
   overflow-x: hidden;
-  & > a {
-    text-decoration: none;
-  }
   h1 {
     color: #ffffff;
     &:hover {

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
@@ -39,22 +39,11 @@ const CityNameWrapper = styled.div``;
 
 function WorldWeatherBar({ worldData }) {
   const { setLat, setLng, setTitle } = useContext(LocationContext);
-  // const [citySelect, setCitySelect] = useState('');
-
-  useEffect(() => {
-    const printData = () => {
-      console.log(worldData);
-    };
-    if (worldData) {
-      printData();
-    }
-  });
 
   const setEm = (curLat, curLng, curTitle) => {
     setLat(curLat);
     setLng(curLng);
     setTitle(curTitle);
-    // setCitySelect(curTitle);
   };
 
   return (
@@ -70,7 +59,6 @@ function WorldWeatherBar({ worldData }) {
                 }
                 tabIndex="0"
                 role="button"
-                // citySelect={citySelect === data.cityTitle}
                 key={nanoid()}
               >
                 <TempWrapper>

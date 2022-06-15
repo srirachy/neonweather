@@ -1,6 +1,7 @@
 const wkey = process.env.REACT_APP_API_KEY_WEATHER;
 const gkey = process.env.REACT_APP_API_KEY_GEOCODE;
-const baseWeatherCall = `https://api.openweathermap.org/data/2.5/onecall?`;
+// change back to 3.0 whenevs
+const baseWeatherCall = `https://api.openweathermap.org/data/3.0/onecall?`;
 const endWeatherCall = `&units=imperial&appid=${wkey}`;
 const baseGeoCall = `https://maps.googleapis.com/maps/api/geocode/json?address=`;
 const baseReverseGeoCall = `https://maps.googleapis.com/maps/api/geocode/json?latlng=`;

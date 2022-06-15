@@ -1,11 +1,10 @@
-import { string } from 'prop-types';
 import {
   convertUnixDate,
   parseDate,
   addZero,
   convertTime,
   createWeatherObj,
-} from '../services/Functions';
+} from './Functions';
 
 describe('convertUnixDate', () => {
   test('it works with a unix input as string', () => {
