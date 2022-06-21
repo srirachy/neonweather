@@ -60,7 +60,7 @@ test('when user enters a location, the weather updates to the location', async (
   });
   expect(searchElmt).toBeInTheDocument();
   await userEvent.type(searchElmt, 'santa clara');
-  await userEvent.keyboard(searchElmt, '{s}{a}{n}{t}{a}{Enter}');
+  await userEvent.keyboard(searchElmt, '{Enter}');
   const title = await screen.findByTestId('forecast_title');
   await (() => expect(title).toHaveTextContent(/santa clara/i));
 });

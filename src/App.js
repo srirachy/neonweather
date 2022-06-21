@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Main from './pages/Main';
 import Layout from './pages/Layout';
 import LocationContext from './utils/LocationContext';
+import GlobalStyle from './utils/GlobalStyle';
 
 function App() {
   // const weatherPath = '/weather_app';
@@ -26,6 +27,7 @@ function App() {
 
   return (
     <LocationContext.Provider value={value}>
+      <GlobalStyle />
       <Routes>
         {/* <Route path={`${weatherPath}/`} element={<Layout />}> */}
         <Route path="/" element={<Layout />}>

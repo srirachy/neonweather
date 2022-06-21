@@ -10,17 +10,35 @@ import { faLocationCrosshairs } from '@fortawesome/free-solid-svg-icons';
 import { nanoid } from 'nanoid';
 import { getLocation, getReverseGeo } from '../services/API';
 import LocationContext from '../utils/LocationContext';
+import { colors } from '../utils/NeonAnimations';
 
 const FormWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  input {
+    height: 1.3rem;
+    font-size: 1.3rem;
+  }
+`;
+
+const SearchDivider = styled.span`
+  left: 50%;
+  top: 10%;
+  bottom: 40%;
+  margin: 0 12px;
+  border-left: 0.1rem solid ${colors.white};
+  box-shadow: 0 0 0.2rem ${colors.white}, 0 0 0.2rem ${colors.white},
+    0 0 2rem ${colors.neon_green}, 0 0 0.9rem ${colors.neon_green},
+    0 0 2.8rem ${colors.neon_green};
 `;
 
 const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
-  color: #ffffff;
-  font-size: 20px;
+  font-size: 1.3rem;
+  color: ${colors.white};
   &:hover {
     cursor: pointer;
+    color: ${colors.neon_green};
   }
 `;
 
@@ -163,6 +181,8 @@ function Search() {
         </label>
       </form>,
     );
+
+    formElmts.push(<SearchDivider key={nanoid()} />);
 
     formElmts.push(
       <StyledFontAwesomeIcon
