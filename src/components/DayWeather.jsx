@@ -74,12 +74,16 @@ const SunWrapper = styled.div`
     font-size: 0.7rem;
   }
   @media ${device.tablet} {
+    height: 25vh;
     p {
       font-size: 1rem;
     }
   }
   @media ${device.laptop} {
     width: 30%;
+    p {
+      font-size: 1.5rem;
+    }
   }
 `;
 
@@ -108,12 +112,16 @@ const MoonWrapper = styled.div`
     font-size: 0.7rem;
   }
   @media ${device.tablet} {
+    height: 25vh;
     p {
       font-size: 1rem;
     }
   }
   @media ${device.laptop} {
     width: 30%;
+    p {
+      font-size: 1.5rem;
+    }
   }
 `;
 
