@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.js": "/neonweather/static/js/main.0fb26516.js",
+    "static/js/787.2a38e5c6.chunk.js": "/neonweather/static/js/787.2a38e5c6.chunk.js",
+    "static/media/four_oh_four_bkgd.png": "/neonweather/static/media/four_oh_four_bkgd.84a60fda71df9f445da4.png",
+    "static/media/main_bkgd.png": "/neonweather/static/media/main_bkgd.9b932a989180f298a28d.png",
+    "index.html": "/neonweather/index.html",
+    "main.0fb26516.js.map": "/neonweather/static/js/main.0fb26516.js.map",
+    "787.2a38e5c6.chunk.js.map": "/neonweather/static/js/787.2a38e5c6.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.0fb26516.js"
+  ]
+}
