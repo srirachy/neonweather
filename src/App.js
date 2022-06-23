@@ -7,7 +7,7 @@ import LocationContext from './utils/LocationContext';
 import GlobalStyle from './utils/GlobalStyle';
 
 function App() {
-  // const weatherPath = '/neonweather';
+  const weatherPath = '/neonweather';
   const [curLoc, setCurLoc] = useState('santa clara'); // default location
   const [lat, setLat] = useState('');
   const [lng, setLng] = useState('');
@@ -30,9 +30,9 @@ function App() {
     <LocationContext.Provider value={value}>
       <GlobalStyle />
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path={`${weatherPath}/`} element={<Layout />}>
           <Route index element={<Main />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path={`${weatherPath}/*`} element={<NotFound />} />
         </Route>
       </Routes>
     </LocationContext.Provider>

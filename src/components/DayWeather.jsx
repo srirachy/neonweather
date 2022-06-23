@@ -127,6 +127,7 @@ const MoonWrapper = styled.div`
 
 function DayWeather({ dayData, ariaTestId, dayTitle }) {
   const [idName, setIdName] = useState('');
+  // useeffect for component testing
   useEffect(() => {
     if (ariaTestId) {
       setIdName(`${ariaTestId}_detail`);
@@ -134,6 +135,7 @@ function DayWeather({ dayData, ariaTestId, dayTitle }) {
   }, [ariaTestId]);
   const renderDetails = () => {
     const dElmts = [];
+    // day detail
     dElmts.push(
       <SunWrapper key={nanoid()}>
         <p key={nanoid()}>{dayData.temp.day.toFixed(1)}&deg;F</p>
@@ -144,6 +146,7 @@ function DayWeather({ dayData, ariaTestId, dayTitle }) {
         <p key={nanoid()}>Sunset: {convertTime(dayData.sunset)}</p>
       </SunWrapper>,
     );
+    // night detail
     dElmts.push(
       <MoonWrapper key={nanoid()}>
         <p key={nanoid()}>{dayData.temp.night.toFixed(1)}&deg;F</p>

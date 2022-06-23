@@ -58,19 +58,20 @@ const SearchWrapper = styled.nav`
 function NavBar() {
   const [showSearch, setShowSearch] = useState(true);
   const location = useLocation();
+  const wPath = '/neonweather';
 
   // set boolean to hide or show search bar ft router useLocation
   useEffect(() => {
-    if (location.pathname !== '/') {
-      setShowSearch(false);
-    } else {
+    if (location.pathname !== '/neonweather') {
       setShowSearch(true);
+    } else {
+      setShowSearch(false);
     }
   }, [location]);
 
   return (
     <HeaderWrapper>
-      <Link to="/">
+      <Link to={`${wPath}/`}>
         <h1>Neon Weather</h1>
       </Link>
       {showSearch && (

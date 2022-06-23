@@ -80,6 +80,7 @@ const TextWrapper = styled.div`
 function WorldWeatherBar({ worldData }) {
   const { setLat, setLng, setTitle } = useContext(LocationContext);
 
+  // pass context state values to update forecast when user clicks on a city in weather bar
   const setEm = (curLat, curLng, curTitle) => {
     setLat(curLat);
     setLng(curLng);
