@@ -29,6 +29,27 @@ export const parseDate = (curDate) => {
   return dateObj;
 };
 
+// convert numerical value month to text
+export const convertMonth = (curMonth) => {
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+  const month = months[curMonth - 1];
+
+  return month;
+};
+
 // add zero to day or month if less than 10, basically jan to sept
 export const addZero = (num) => {
   if (num < 10) {

@@ -7,8 +7,10 @@ import LocationContext from '../utils/LocationContext';
 import WorldWeatherBar from '../components/WorldWeatherBar';
 
 const MainWrapper = styled.main`
-  width: 100vw;
-  height: 100vh;
+  max-width: 100vw;
+  min-height: 95vh;
+  padding: 1px;
+  background-color: rgba(0, 0, 0, 0.75);
 `;
 
 function Main() {

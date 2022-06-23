@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
@@ -23,9 +23,6 @@ test('renders eight day forecast images', async () => {
   );
   const cardImgs = await screen.findAllByRole('img');
   expect(cardImgs).toHaveLength(8);
-  // const altElmts = await screen.findAllByAltText(
-  //   /sky|clouds|rain|thunderstorm|snow|mist/i,
-  // );
 });
 
 test('when user clicks on a card, the proper output is generated', async () => {
@@ -52,29 +49,21 @@ test('when user clicks on a card, the proper output is generated', async () => {
   expect(detailElmtOne).not.toBeInTheDocument();
 });
 
-// test('when user enters a location, the weather updates to the location', async () => {
-//   const handleSubmit = jest.fn();
-//   const { getByTestId } = render(
-//     <BrowserRouter>
-//       <App handleSubmit={handleSubmit} />
-//     </BrowserRouter>,
-//   );
-
-//   const searchElmt = screen.getByRole('textbox', {
-//     placeholder: /search location/i,
-//   });
-//   expect(searchElmt).toBeInTheDocument();
-
-//   // userEvent.type(searchElmt, 'Santa Clara');
-//   // fireEvent.submit(searchElmt);
-//   const input = screen.getByTestId('forecast_title');
-//   // userEvent.type(input, 'santa clara{enter}');
-//   // fireEvent.keyPress(input, { key: 'Enter', charCode: 13 });
-//   // expect(handleSubmit).toHaveBeenCalled();
-//   userEvent.keyboard('{Enter}');
-//   const title = await screen.getByTestId('forecast_title');
-//   expect(title).toHaveTextContent(/santa clara/i);
-// });
+test('when user enters a location, the weather updates to the location', async () => {
+  render(
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>,
+  );
+  const searchElmt = screen.getByRole('textbox', {
+    placeholder: /search location/i,
+  });
+  expect(searchElmt).toBeInTheDocument();
+  await userEvent.type(searchElmt, 'santa clara');
+  await userEvent.keyboard(searchElmt, '{Enter}');
+  const title = await screen.findByTestId('forecast_title');
+  await (() => expect(title).toHaveTextContent(/santa clara/i));
+});
 
 test('change the search text', () => {
   render(
@@ -93,12 +82,12 @@ test('change the search text', () => {
   expect(input).toHaveValue('santa clara');
 });
 
-// test('render seven city weather clickable images', async () => {
-//   render(
-//     <BrowserRouter>
-//       <App />
-//     </BrowserRouter>,
-//   );
-//   const cardImgs = await screen.findAllByRole('img');
-//   expect(cardImgs).toHaveLength(7);
-// });
+test('render seven city weather clickable images', async () => {
+  render(
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>,
+  );
+  const cardImgs = await screen.findAllByRole('img');
+  await (() => expect(cardImgs).toHaveLength(15));
+});
