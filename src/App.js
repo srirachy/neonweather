@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Main from './pages/Main';
 import Layout from './pages/Layout';
 import NotFound from './pages/NotFound';
@@ -30,11 +30,6 @@ function App() {
     <LocationContext.Provider value={value}>
       <GlobalStyle />
       <Routes>
-        {/* <Route path={`${weatherPath}/`} element={<Layout />}> */}
-        {/* <Route path="/" element={<Navigate to="/neonweather" />} />
-        <Route path="/neonweather" element={<Layout />} />
-        <Route index element={<Main />} />
-        <Route path="*" element={<NotFound />} /> */}
         <Route path="/" element={<Layout />}>
           <Route index element={<Main />} />
           <Route path="*" element={<NotFound />} />
