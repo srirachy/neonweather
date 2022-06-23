@@ -10,7 +10,7 @@ const MainWrapper = styled.main`
   max-width: 100vw;
   min-height: 95vh;
   padding: 1px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.75);
 `;
 
 function Main() {

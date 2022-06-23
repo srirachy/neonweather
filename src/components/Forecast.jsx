@@ -4,13 +4,14 @@ import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
 import DayWeather from './DayWeather';
 import LocationContext from '../utils/LocationContext';
+import { colors, flicker } from '../utils/NeonAnimations';
+import { device } from '../utils/Device';
 import {
   convertUnixDate,
   parseDate,
   convertMonth,
   addZero,
 } from '../services/Functions';
-import { colors, flicker } from '../utils/NeonAnimations';
 
 const ForecastContainer = styled.article`
   width: 95%;
@@ -30,10 +31,16 @@ const TitleContainer = styled.div`
   p {
     font-family: 'Paytone One', sans-serif;
     color: ${colors.white};
-    text-shadow: 0 0 7px ${colors.white}, 0 0 10px ${colors.white},
-      0 0 21px ${colors.white}, 0 0 42px ${colors.neon_orange},
-      0 0 82px ${colors.neon_orange}, 0 0 92px ${colors.neon_orange},
-      0 0 102px ${colors.neon_orange}, 0 0 151px ${colors.neon_orange};
+    text-shadow: 0 0 7px ${colors.white}, 0 0 21px ${colors.white},
+      0 0 42px ${colors.neon_orange}, 0 0 82px ${colors.neon_orange},
+      0 0 92px ${colors.neon_orange}, 0 0 102px ${colors.neon_orange},
+      0 0 151px ${colors.neon_orange};
+  }
+  @media ${device.laptop} {
+    p {
+      margin: 10px 0;
+      font-size: 2rem;
+    }
   }
 `;
 
@@ -54,6 +61,15 @@ const CardContainer = styled.div`
     width: 2.5rem;
     display: flex;
   }
+  @media ${device.laptop} {
+    p {
+      font-size: 1rem;
+    }
+    img {
+      height: 4rem;
+      width: 4rem;
+    }
+  }
 `;
 
 const CardWrapper = styled.div`
@@ -64,6 +80,7 @@ const CardWrapper = styled.div`
   justify-content: space-evenly;
   margin: 5px 5px;
   text-transform: capitalize;
+  background-color: rgba(0, 0, 0, 0.8);
   color: ${colors.white};
   text-shadow: 0 0 7px ${colors.white}, 0 0 10px ${colors.white},
     0 0 21px ${colors.white}, 0 0 42px ${colors.white};
@@ -83,6 +100,10 @@ const CardWrapper = styled.div`
   &:hover {
     cursor: pointer;
     animation: ${flicker.neon_orange} 2.5s infinite alternate;
+  }
+  @media ${device.laptop} {
+    width: 15%;
+    margin: 50px 30px;
   }
 `;
 

@@ -1,9 +1,9 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import Search from './Search';
+import { Link, useLocation } from 'react-router-dom';
 import { colors, flicker } from '../utils/NeonAnimations';
 import { device } from '../utils/Device';
+import Search from './Search';
 
 const HeaderWrapper = styled.header`
   min-height: 15vh;
@@ -19,10 +19,10 @@ const HeaderWrapper = styled.header`
     font-size: 2.5rem;
     font-family: 'Secular One', sans-serif;
     color: ${colors.white};
-    text-shadow: 0 0 7px ${colors.white}, 0 0 10px ${colors.white},
-      0 0 21px ${colors.white}, 0 0 42px ${colors.neon_green},
-      0 0 82px ${colors.neon_green}, 0 0 92px ${colors.neon_green},
-      0 0 102px ${colors.neon_green}, 0 0 151px ${colors.neon_green};
+    text-shadow: 0 0 7px ${colors.white}, 0 0 21px ${colors.white},
+      0 0 42px ${colors.neon_green}, 0 0 82px ${colors.neon_green},
+      0 0 92px ${colors.neon_green}, 0 0 102px ${colors.neon_green},
+      0 0 151px ${colors.neon_green};
     &:hover {
       animation: ${flicker.neon_green} 2.5s infinite alternate;
     }
@@ -38,7 +38,7 @@ const HeaderWrapper = styled.header`
   }
 `;
 
-const NavWrapper = styled.nav`
+const SearchWrapper = styled.nav`
   width: 100%;
   height: 2.5rem;
   margin: 0 auto;
@@ -56,14 +56,28 @@ const NavWrapper = styled.nav`
   }
 `;
 function NavBar() {
+  const [showSearch, setShowSearch] = useState(true);
+  const location = useLocation();
+
+  // set boolean to hide or show search bar ft router useLocation
+  useEffect(() => {
+    if (location.pathname !== '/') {
+      setShowSearch(false);
+    } else {
+      setShowSearch(true);
+    }
+  }, [location]);
+
   return (
     <HeaderWrapper>
       <Link to="/">
         <h1>Neon Weather</h1>
       </Link>
-      <NavWrapper>
-        <Search />
-      </NavWrapper>
+      {showSearch && (
+        <SearchWrapper>
+          <Search />
+        </SearchWrapper>
+      )}
     </HeaderWrapper>
   );
 }

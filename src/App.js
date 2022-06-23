@@ -1,12 +1,13 @@
 import React, { useState, useMemo } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Main from './pages/Main';
 import Layout from './pages/Layout';
+import NotFound from './pages/NotFound';
 import LocationContext from './utils/LocationContext';
 import GlobalStyle from './utils/GlobalStyle';
 
 function App() {
-  // const weatherPath = '/weather_app';
+  // const weatherPath = '/neonweather';
   const [curLoc, setCurLoc] = useState('santa clara'); // default location
   const [lat, setLat] = useState('');
   const [lng, setLng] = useState('');
@@ -30,8 +31,13 @@ function App() {
       <GlobalStyle />
       <Routes>
         {/* <Route path={`${weatherPath}/`} element={<Layout />}> */}
+        {/* <Route path="/" element={<Navigate to="/neonweather" />} />
+        <Route path="/neonweather" element={<Layout />} />
+        <Route index element={<Main />} />
+        <Route path="*" element={<NotFound />} /> */}
         <Route path="/" element={<Layout />}>
           <Route index element={<Main />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </LocationContext.Provider>

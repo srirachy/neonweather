@@ -4,10 +4,12 @@ import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
 import { convertTime } from '../services/Functions';
 import { colors } from '../utils/NeonAnimations';
+import { device } from '../utils/Device';
 
 const DayForecastContainer = styled.section`
   margin-top: 20px;
   max-height: 100%;
+  width: 100%;
 `;
 
 const TitleWrapper = styled.div`
@@ -20,10 +22,15 @@ const TitleWrapper = styled.div`
   p {
     font-family: 'Paytone One', sans-serif;
     color: ${colors.white};
-    text-shadow: 0 0 7px ${colors.white}, 0 0 10px ${colors.white},
-      0 0 21px ${colors.white}, 0 0 42px ${colors.neon_lime},
-      0 0 82px ${colors.neon_lime}, 0 0 92px ${colors.neon_lime},
-      0 0 102px ${colors.neon_lime}, 0 0 151px ${colors.neon_lime};
+    text-shadow: 0 0 7px ${colors.white}, 0 0 21px ${colors.white},
+      0 0 42px ${colors.neon_lime}, 0 0 82px ${colors.neon_lime},
+      0 0 92px ${colors.neon_lime}, 0 0 102px ${colors.neon_lime};
+  }
+  @media ${device.laptop} {
+    p {
+      margin: 10px 0;
+      font-size: 2rem;
+    }
   }
 `;
 
@@ -34,23 +41,80 @@ const DetailsWrapper = styled.div`
   height: 65%;
   justify-content: space-evenly;
   margin: 20px 0;
+  @media ${device.laptop} {
+    margin-top: 50px;
+    p {
+      font-size: 1.5rem;
+      margin: 5px 0;
+    }
+  }
 `;
 
 const SunWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   color: ${colors.white};
+  border: 0.2rem solid ${colors.white};
+  border-radius: 1rem;
+  padding: 0.3em;
+  text-align: center;
+  height: 20vh;
+  width: 35%;
+  background-color: rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0 0.2rem ${colors.white}, 0 0 0.2rem ${colors.white},
+    0 0 2rem ${colors.white}, 0 0 0.9rem ${colors.neon_pink},
+    0 0 2.8rem ${colors.neon_pink},
+    inset 0 0 1.3rem ${colors.neon_pink};
   text-shadow: 0 0 7px ${colors.white}, 0 0 10px ${colors.white},
     0 0 21px ${colors.white}, 0 0 42px ${colors.neon_pink},
     0 0 82px ${colors.neon_pink}, 0 0 92px ${colors.neon_pink},
     0 0 102px ${colors.neon_pink}, 0 0 151px ${colors.neon_pink};
+  p {
+    margin: auto 0;
+    font-size: 0.7rem;
+  }
+  @media ${device.tablet} {
+    p {
+      font-size: 1rem;
+    }
+  }
+  @media ${device.laptop} {
+    width: 30%;
+  }
 `;
 
 const MoonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   color: ${colors.white};
+  border: 0.2rem solid ${colors.white};
+  border-radius: 1rem;
+  padding: 0.3em;
+  text-align: center;
+  height: 20vh;
+  width: 35%;
+  background-color: rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0 0.2rem ${colors.white}, 0 0 0.2rem ${colors.white},
+    0 0 2rem ${colors.white}, 0 0 0.9rem ${colors.electric_blue},
+    0 0 2.8rem ${colors.electric_blue},
+    inset 0 0 1.3rem ${colors.electric_blue};
   text-shadow: 0 0 7px ${colors.white}, 0 0 10px ${colors.white},
     0 0 21px ${colors.white}, 0 0 42px ${colors.electric_blue},
     0 0 82px ${colors.electric_blue}, 0 0 92px ${colors.electric_blue},
     0 0 102px ${colors.electric_blue},
     0 0 151px ${colors.electric_blue};
+  p {
+    margin: auto 0;
+    font-size: 0.7rem;
+  }
+  @media ${device.tablet} {
+    p {
+      font-size: 1rem;
+    }
+  }
+  @media ${device.laptop} {
+    width: 30%;
+  }
 `;
 
 function DayWeather({ dayData, ariaTestId, dayTitle }) {

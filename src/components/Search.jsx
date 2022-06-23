@@ -9,8 +9,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationCrosshairs } from '@fortawesome/free-solid-svg-icons';
 import { nanoid } from 'nanoid';
 import { getLocation, getReverseGeo } from '../services/API';
-import LocationContext from '../utils/LocationContext';
 import { colors } from '../utils/NeonAnimations';
+import LocationContext from '../utils/LocationContext';
 
 const FormWrapper = styled.div`
   display: flex;
@@ -19,6 +19,8 @@ const FormWrapper = styled.div`
   input {
     height: 1.3rem;
     font-size: 1.3rem;
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.25);
   }
 `;
 

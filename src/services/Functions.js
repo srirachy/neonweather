@@ -29,6 +29,7 @@ export const parseDate = (curDate) => {
   return dateObj;
 };
 
+// convert numerical value month to text
 export const convertMonth = (curMonth) => {
   const months = [
     'January',
