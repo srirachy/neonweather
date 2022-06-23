@@ -29,7 +29,7 @@ This project utilizes JS and React to run.
 - Text editor or [VS Code](https://code.visualstudio.com/)
 
 ## Deployment
-- TBD
+- GitHub Pages `https://srirachy.github.io/neonweather/`
 
 ## License
 - Open Source Code.
